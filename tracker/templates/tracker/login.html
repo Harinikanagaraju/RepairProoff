@@ -1,0 +1,39 @@
+
+{% extends 'tracker/base.html' %}
+
+{% block title %}Login | RepairProof{% endblock %}
+
+{% block content %}
+
+<div class="auth-wrapper">
+    <div class="auth-card">
+        <div class="brand auth-brand">
+            <span class="brand-icon">R</span>
+            <div>
+                <h2>RepairProof</h2>
+                <small>DATA QUANTUM</small>
+            </div>
+        </div>
+
+        <p class="eyebrow">WELCOME BACK</p>
+        <h1>Sign in</h1>
+        <p class="subheading">Access your appliance management workspace.</p>
+
+        <form method="post" class="data-form">
+            {% csrf_token %}
+
+            {{ form.as_p }}
+
+            <button type="submit" class="primary-btn full-btn">
+                Login →
+            </button>
+        </form>
+
+        <p class="auth-footer">
+            Don't have an account?
+            <a href="{% url 'register' %}">Create account</a>
+        </p>
+    </div>
+</div>
+
+{% endblock %}

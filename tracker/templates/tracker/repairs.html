@@ -1,0 +1,55 @@
+
+{% extends 'tracker/base.html' %}
+
+{% block title %}Repair History | RepairProof{% endblock %}
+
+{% block content %}
+
+<div class="topbar">
+    <div>
+        <p class="eyebrow">MAINTENANCE / RECORDS</p>
+        <h1>Repair History</h1>
+        <p class="subheading">Track service records and repair expenses.</p>
+    </div>
+
+    <a href="{% url 'add_repair' %}" class="primary-btn">
+        + Add Repair
+    </a>
+</div>
+
+<div class="table-container">
+    <table>
+        <thead>
+            <tr>
+                <th>Appliance</th>
+                <th>Issue</th>
+                <th>Service Centre</th>
+                <th>Repair Date</th>
+                <th>Cost</th>
+                <th>Status</th>
+            </tr>
+        </thead>
+
+        <tbody>
+            {% for repair in repairs %}
+            <tr>
+                <td>{{ repair.appliance.name }}</td>
+                <td>{{ repair.issue }}</td>
+                <td>{{ repair.service_center|default:"—" }}</td>
+                <td>{{ repair.repair_date }}</td>
+                <td>₹{{ repair.repair_cost }}</td>
+                <td>{{ repair.status }}</td>
+            </tr>
+
+            {% empty %}
+            <tr>
+                <td colspan="6" class="empty-state">
+                    No repair records available.
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+
+{% endblock %}

@@ -1,0 +1,25 @@
+
+{% extends 'tracker/base.html' %}
+
+{% block title %}Add Repair | RepairProof{% endblock %}
+
+{% block content %}
+
+<div class="form-page">
+    <p class="eyebrow">MAINTENANCE MANAGEMENT</p>
+    <h1>Add Repair Record</h1>
+    <p class="subheading">Record an appliance repair or service visit.</p>
+
+    <form method="post" class="data-form">
+        {% csrf_token %}
+
+        {{ form.as_p }}
+
+        <div class="form-actions">
+            <button type="submit" class="primary-btn">Save Repair</button>
+            <a href="{% url 'repairs' %}" class="secondary-btn">Cancel</a>
+        </div>
+    </form>
+</div>
+
+{% endblock %}

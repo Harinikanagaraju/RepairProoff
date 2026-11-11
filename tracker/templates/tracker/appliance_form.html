@@ -1,0 +1,25 @@
+
+{% extends 'tracker/base.html' %}
+
+{% block title %}{{ page_title }} | RepairProof{% endblock %}
+
+{% block content %}
+
+<div class="form-page">
+    <p class="eyebrow">DEVICE MANAGEMENT</p>
+    <h1>{{ page_title }}</h1>
+    <p class="subheading">Enter your appliance and purchase details.</p>
+
+    <form method="post" enctype="multipart/form-data" class="data-form">
+        {% csrf_token %}
+
+        {{ form.as_p }}
+
+        <div class="form-actions">
+            <button type="submit" class="primary-btn">Save Appliance</button>
+            <a href="{% url 'appliances' %}" class="secondary-btn">Cancel</a>
+        </div>
+    </form>
+</div>
+
+{% endblock %}

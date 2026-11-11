@@ -1,0 +1,79 @@
+
+{% extends 'tracker/base.html' %}
+
+{% block title %}Appliances | RepairProof{% endblock %}
+
+{% block content %}
+
+<div class="topbar">
+    <div>
+        <p class="eyebrow">MANAGEMENT / DEVICES</p>
+        <h1>My Appliances</h1>
+        <p class="subheading">Manage your registered home appliances.</p>
+    </div>
+
+    <a href="{% url 'add_appliance' %}" class="primary-btn">
+        + Add Appliance
+    </a>
+</div>
+
+<div class="table-container">
+    <table>
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Brand</th>
+                <th>Category</th>
+                <th>Warranty End</th>
+                <th>Status</th>
+                <th>Bill</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+
+        <tbody>
+            {% for appliance in appliances %}
+            <tr>
+                <td>{{ appliance.name }}</td>
+                <td>{{ appliance.brand }}</td>
+                <td>{{ appliance.category }}</td>
+                <td>{{ appliance.warranty_end }}</td>
+
+                <td>
+                    <span class="status {{ appliance.warranty_status|slugify }}">
+                        {{ appliance.warranty_status }}
+                    </span>
+                </td>
+
+                <td>
+                    {% if appliance.bill %}
+                        <a href="{{ appliance.bill.url }}" target="_blank">View Bill</a>
+                    {% else %}
+                        —
+                    {% endif %}
+                </td>
+
+                <td class="actions">
+                    <a href="{% url 'edit_appliance' appliance.pk %}">Edit</a>
+
+                    <form method="post"
+                          action="{% url 'delete_appliance' appliance.pk %}"
+                          onsubmit="return confirm('Delete this appliance?');">
+                        {% csrf_token %}
+                        <button type="submit" class="delete-btn">Delete</button>
+                    </form>
+                </td>
+            </tr>
+
+            {% empty %}
+            <tr>
+                <td colspan="7" class="empty-state">
+                    No appliances found. Add your first appliance.
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+
+{% endblock %}

@@ -1,0 +1,107 @@
+
+{% extends 'tracker/base.html' %}
+
+{% block title %}Dashboard | RepairProof{% endblock %}
+
+{% block content %}
+
+<div class="topbar">
+    <div>
+        <p class="eyebrow">OVERVIEW / DASHBOARD</p>
+        <h1>Welcome back, {{ user.username }}.</h1>
+        <p class="subheading">Your appliances. Your records. Under control.</p>
+    </div>
+
+    <a href="{% url 'add_appliance' %}" class="primary-btn">
+        + Add Appliance
+    </a>
+</div>
+
+<div class="stats-grid">
+
+    <div class="stat-card">
+        <span>Total Appliances</span>
+        <h2>{{ total_appliances }}</h2>
+        <small>Registered devices</small>
+    </div>
+
+    <div class="stat-card">
+        <span>Active Warranty</span>
+        <h2>{{ active_warranties }}</h2>
+        <small>Currently protected</small>
+    </div>
+
+    <div class="stat-card">
+        <span>Expiring Soon</span>
+        <h2>{{ expiring_warranties }}</h2>
+        <small>Within 30 days</small>
+    </div>
+
+    <div class="stat-card">
+        <span>Expired Warranty</span>
+        <h2>{{ expired_warranties }}</h2>
+        <small>Protection ended</small>
+    </div>
+
+</div>
+
+<div class="section-heading">
+    <div>
+        <p class="eyebrow">YOUR COLLECTION</p>
+        <h2>Recently Added Appliances</h2>
+    </div>
+
+    <a href="{% url 'appliances' %}" class="text-link">
+        View all →
+    </a>
+</div>
+
+<div class="table-container">
+
+    <table>
+        <thead>
+            <tr>
+                <th>Appliance</th>
+                <th>Brand</th>
+                <th>Purchase Date</th>
+                <th>Warranty Ends</th>
+                <th>Status</th>
+            </tr>
+        </thead>
+
+        <tbody>
+            {% for appliance in recent_appliances %}
+            <tr>
+                <td>{{ appliance.name }}</td>
+                <td>{{ appliance.brand }}</td>
+                <td>{{ appliance.purchase_date }}</td>
+                <td>{{ appliance.warranty_end }}</td>
+                <td>
+                    <span class="status {{ appliance.warranty_status|slugify }}">
+                        {{ appliance.warranty_status }}
+                    </span>
+                </td>
+            </tr>
+            {% empty %}
+            <tr>
+                <td colspan="5" class="empty-state">
+                    No appliances added yet.
+                    <a href="{% url 'add_appliance' %}">Add your first appliance</a>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+</div>
+
+<div class="bottom-card">
+    <div>
+        <p class="eyebrow">EXPENSE TRACKER</p>
+        <h2>₹{{ total_spent|floatformat:2 }}</h2>
+        <p>Total purchase value of your registered appliances</p>
+    </div>
+    <div class="bottom-icon">₹</div>
+</div>
+
+{% endblock %}
